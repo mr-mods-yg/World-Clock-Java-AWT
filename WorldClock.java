@@ -6,7 +6,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
-public class WorldClock extends WindowAdapter implements ActionListener {
+public class WorldClock extends WindowAdapter implements ItemListener {
     Frame f;
     Label lb;
     Label lb1;
@@ -17,13 +17,13 @@ public class WorldClock extends WindowAdapter implements ActionListener {
         f.setVisible(true);
         f.setLayout(null);
         f.addWindowListener(this);
-        List lst = new List(5);
+        Choice lst = new Choice();
         String arr[] = ZoneId.getAvailableZoneIds().toArray(new String[0]);
         Arrays.sort(arr);
         for (String i: arr){
             lst.add(i);
         }
-        lst.addActionListener(this);
+        lst.addItemListener(this);
         lst.setBounds(100,60,150,100);
         f.add(lst);
         LocalTime obj1 = LocalTime.now();
@@ -44,9 +44,12 @@ public class WorldClock extends WindowAdapter implements ActionListener {
 //        Listener lis = new Listener();
     }
     @Override
-    public void actionPerformed(ActionEvent e) {
-        zoneId = e.getActionCommand();
+    public void itemStateChanged(ItemEvent e){
+        zoneId = e.getItem().toString();
     }
+//    public void actionPerformed(ActionEvent e) {
+//        zoneId = e.getActionCommand();
+//    }
     @Override
     public void windowClosing(WindowEvent e) {
         f.dispose();
